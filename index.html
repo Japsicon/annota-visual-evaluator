@@ -1,714 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Annota Visual Evaluator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>Annota Visual Evaluator</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: #08090c;
-      color: #f5f7fa;
-      min-height: 100vh;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0d12;
+    color: #f5f7fa;
+}
 
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
 
-    .app {
-      max-width: 900px;
-      margin: auto;
-      padding: 18px;
-    }
+.header {
+    padding: 25px 0;
+}
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 22px;
-    }
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+.subtitle {
+    color: #9ca3af;
+    margin-top: 6px;
+}
 
-    .logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #7c5cff, #21d4fd);
-      font-size: 22px;
-    }
+.card {
+    background: #141821;
+    border: 1px solid #272d3a;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 18px;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 20px;
-    }
+label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
 
-    .subtitle {
-      color: #8f96a3;
-      font-size: 12px;
-      margin-top: 3px;
-    }
+textarea {
+    width: 100%;
+    min-height: 110px;
+    background: #0d1118;
+    border: 1px solid #303746;
+    border-radius: 12px;
+    color: white;
+    padding: 14px;
+    font-size: 15px;
+    resize: vertical;
+}
 
-    .card {
-      background: rgba(22, 24, 30, .92);
-      border: 1px solid #292d36;
-      border-radius: 20px;
-      padding: 18px;
-      margin-bottom: 16px;
-    }
+.upload-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
 
-    .section-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
+.image-box {
+    background: #0d1118;
+    border: 1px dashed #465064;
+    border-radius: 15px;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
 
-    textarea {
-      width: 100%;
-      min-height: 100px;
-      resize: vertical;
-      border: 1px solid #343945;
-      border-radius: 14px;
-      background: #101217;
-      color: white;
-      padding: 14px;
-      outline: none;
-    }
+.image-box img {
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+}
 
-    textarea:focus {
-      border-color: #7c5cff;
-    }
+.placeholder {
+    text-align: center;
+    color: #7d8798;
+    padding: 20px;
+}
 
-    .upload-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+input[type="file"] {
+    width: 100%;
+    margin-top: 12px;
+}
 
-    .upload {
-      min-height: 220px;
-      border: 1px dashed #464b58;
-      border-radius: 16px;
-      background: #101217;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
+.section-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
 
-    .upload:hover {
-      border-color: #7c5cff;
-    }
+.criteria {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
 
-    .upload input {
-      display: none;
-    }
+.criterion {
+    background: #0d1118;
+    border: 1px solid #2b3240;
+    padding: 15px;
+    border-radius: 13px;
+}
 
-    .upload-content {
-      padding: 20px;
-      color: #8f96a3;
-    }
+.criterion strong {
+    display: block;
+    margin-bottom: 5px;
+}
 
-    .upload-icon {
-      font-size: 36px;
-      margin-bottom: 8px;
-    }
+.criterion span {
+    color: #9ca3af;
+    font-size: 13px;
+}
 
-    .preview {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: none;
-      background: #050608;
-    }
+.choice {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
 
-    .image-label {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: rgba(0,0,0,.7);
-      border-radius: 8px;
-      padding: 6px 9px;
-      font-size: 12px;
-      z-index: 2;
-    }
+.choice button {
+    border: 1px solid #343c4c;
+    background: #171d28;
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+}
 
-    .primary {
-      width: 100%;
-      border: 0;
-      padding: 15px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #7c5cff, #5b7cff);
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 14px;
-    }
+.choice button.selected {
+    background: #2563eb;
+    border-color: #3b82f6;
+}
 
-    .primary:disabled {
-      opacity: .4;
-      cursor: not-allowed;
-    }
+.reason {
+    margin-top: 15px;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.submit {
+    width: 100%;
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 17px;
+    border-radius: 13px;
+    font-size: 17px;
+    font-weight: 800;
+    margin-top: 15px;
+}
 
-    .progress {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 18px;
-      overflow-x: auto;
-    }
+.submit:active {
+    transform: scale(.99);
+}
 
-    .progress span {
-      height: 5px;
-      min-width: 50px;
-      flex: 1;
-      border-radius: 20px;
-      background: #292d36;
-    }
+.result {
+    display: none;
+    background: #101827;
+    border: 1px solid #2563eb;
+    border-radius: 15px;
+    padding: 18px;
+    margin-top: 18px;
+}
 
-    .progress span.active {
-      background: linear-gradient(90deg, #7c5cff, #21d4fd);
-    }
-
-    .choice-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
+@media(max-width:700px) {
+    .upload-grid,
+    .criteria,
     .choice {
-      padding: 15px;
-      border: 1px solid #343945;
-      background: #101217;
-      color: white;
-      border-radius: 13px;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .choice.selected {
-      border-color: #7c5cff;
-      background: rgba(124,92,255,.16);
-    }
-
-    .choice strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .choice small {
-      color: #8f96a3;
-    }
-
-    .comparison {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      overflow: hidden;
-      border-radius: 16px;
-      background: #050608;
-      margin-bottom: 15px;
-    }
-
-    .comparison img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .image-b {
-      clip-path: inset(0 50% 0 0);
-    }
-
-    .slider {
-      position: absolute;
-      width: 100%;
-      bottom: 15px;
-      left: 0;
-      z-index: 5;
-    }
-
-    .slider input {
-      width: 100%;
-    }
-
-    .notes {
-      width: 100%;
-      min-height: 90px;
-      margin-top: 10px;
-    }
-
-    .final-result {
-      text-align: center;
-      padding: 20px;
-    }
-
-    .result-icon {
-      font-size: 52px;
-      margin-bottom: 10px;
-    }
-
-    .metric {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 12px 0;
-      border-bottom: 1px solid #292d36;
-    }
-
-    .metric:last-child {
-      border-bottom: 0;
-    }
-
-    .metric span:last-child {
-      color: #aeb5c2;
-      text-align: right;
-    }
-
-    .footer {
-      text-align: center;
-      color: #676e7c;
-      font-size: 11px;
-      padding: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .app {
-        padding: 12px;
-      }
-
-      .upload-grid,
-      .choice-grid {
         grid-template-columns: 1fr;
-      }
-
-      .upload {
-        min-height: 180px;
-      }
-
-      h1 {
-        font-size: 18px;
-      }
     }
-  </style>
+
+    .image-box,
+    .image-box img {
+        height: 240px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-  <header>
-    <div class="brand">
-      <div class="logo">🎨</div>
-      <div>
-        <h1>Annota Visual Evaluator</h1>
-        <div class="subtitle">High-End Visual Quality & Aesthetic Comparison</div>
-      </div>
-    </div>
-  </header>
-
-  <!-- START SCREEN -->
-  <section id="startScreen">
-
-    <div class="card">
-      <div class="section-title">🎯 Evaluation Prompt</div>
-
-      <textarea
-        id="prompt"
-        placeholder="Enter the image-generation prompt here..."
-      ></textarea>
+    <div class="header">
+        <div class="logo">✦ Annota Visual Evaluator</div>
+        <div class="subtitle">
+            High-end AI image quality & aesthetic comparison
+        </div>
     </div>
 
     <div class="card">
-      <div class="section-title">🖼️ Upload Images</div>
 
-      <div class="upload-grid">
+        <div class="section-title">01 — Prompt</div>
 
-        <label class="upload">
-          <span class="image-label">IMAGE A</span>
-          <input type="file" id="fileA" accept="image/*">
-          <div class="upload-content" id="uploadTextA">
-            <div class="upload-icon">＋</div>
-            Upload Image A
-            <br>
-            <small>JPG, PNG or WEBP</small>
-          </div>
-          <img id="previewA" class="preview">
-        </label>
+        <label>Evaluation Prompt</label>
 
-        <label class="upload">
-          <span class="image-label">IMAGE B</span>
-          <input type="file" id="fileB" accept="image/*">
-          <div class="upload-content" id="uploadTextB">
-            <div class="upload-icon">＋</div>
-            Upload Image B
-            <br>
-            <small>JPG, PNG or WEBP</small>
-          </div>
-          <img id="previewB" class="preview">
-        </label>
+        <textarea id="prompt"
+        placeholder="Enter the prompt used to generate the images..."></textarea>
 
-      </div>
-
-      <button id="startBtn" class="primary" disabled>
-        Start Evaluation
-      </button>
     </div>
-
-  </section>
-
-
-  <!-- EVALUATION SCREEN -->
-  <section id="evaluationScreen" class="hidden">
-
-    <div class="progress" id="progress"></div>
 
     <div class="card">
 
-      <div id="stepContent"></div>
+        <div class="section-title">02 — Compare Images</div>
 
-      <button id="nextBtn" class="primary">
-        Continue
-      </button>
+        <div class="upload-grid">
+
+            <div>
+                <label>Image A</label>
+
+                <div class="image-box" id="boxA">
+                    <div class="placeholder">
+                        🖼️<br><br>
+                        Upload Image A
+                    </div>
+                </div>
+
+                <input type="file"
+                accept="image/*"
+                onchange="previewImage(event, 'boxA')">
+            </div>
+
+
+            <div>
+                <label>Image B</label>
+
+                <div class="image-box" id="boxB">
+                    <div class="placeholder">
+                        🖼️<br><br>
+                        Upload Image B
+                    </div>
+                </div>
+
+                <input type="file"
+                accept="image/*"
+                onchange="previewImage(event, 'boxB')">
+            </div>
+
+        </div>
 
     </div>
 
-  </section>
 
+    <div class="card">
 
-  <!-- FINAL RESULT -->
-  <section id="resultScreen" class="hidden">
+        <div class="section-title">
+            03 — Evaluation Criteria
+        </div>
 
-    <div class="card final-result">
+        <div class="criteria">
 
-      <div class="result-icon">🏆</div>
+            <div class="criterion">
+                <strong>🎨 Aesthetic Value</strong>
+                <span>
+                    Composition, color, lighting and artistic quality.
+                </span>
+            </div>
 
-      <h2 id="resultTitle">Evaluation Complete</h2>
+            <div class="criterion">
+                <strong>⚙️ Technical Quality</strong>
+                <span>
+                    Sharpness, detail, noise, compression and clarity.
+                </span>
+            </div>
 
-      <p id="resultText"></p>
+            <div class="criterion">
+                <strong>🧍 Anatomy & Structure</strong>
+                <span>
+                    Check faces, fingers, limbs, objects and physical logic.
+                </span>
+            </div>
 
-      <button class="primary" onclick="location.reload()">
-        Start New Evaluation
-      </button>
+            <div class="criterion">
+                <strong>🎯 Prompt Relevance</strong>
+                <span>
+                    Does the image capture the main subject and intent?
+                </span>
+            </div>
+
+            <div class="criterion">
+                <strong>✨ Creativity</strong>
+                <span>
+                    Originality, composition and creative interpretation.
+                </span>
+            </div>
+
+            <div class="criterion">
+                <strong>🚫 Visual Artifacts</strong>
+                <span>
+                    Look for glitches, unwanted objects, distortion and noise.
+                </span>
+            </div>
+
+        </div>
 
     </div>
 
-  </section>
 
-  <div class="footer">
-    Annota Visual Evaluator • Professional Image Assessment
-  </div>
+    <div class="card">
+
+        <div class="section-title">
+            04 — Final Comparison
+        </div>
+
+        <p style="color:#9ca3af;">
+            Think like a professional editor choosing the image
+            that would actually be used.
+        </p>
+
+        <div class="choice">
+
+            <button onclick="choose('A', this)">
+                Image A
+            </button>
+
+            <button onclick="choose('B', this)">
+                Image B
+            </button>
+
+            <button onclick="choose('Tie', this)">
+                Tie
+            </button>
+
+        </div>
+
+        <div class="reason">
+
+            <label>Reason for your decision</label>
+
+            <textarea
+            id="reason"
+            placeholder="Briefly explain why you selected this result..."></textarea>
+
+        </div>
+
+        <button class="submit" onclick="submitEvaluation()">
+            Submit Evaluation
+        </button>
+
+        <div class="result" id="result"></div>
+
+    </div>
 
 </div>
 
 
 <script>
 
-  // Telegram Mini App
-  const tg = window.Telegram?.WebApp;
+let selectedChoice = "";
 
-  if (tg) {
-    tg.ready();
-    tg.expand();
-  }
+function previewImage(event, boxId) {
 
-
-  // Application state
-
-  const state = {
-    prompt: "",
-    imageA: null,
-    imageB: null,
-    step: 0,
-    answers: {},
-    finalChoice: null
-  };
-
-
-  const steps = [
-
-    {
-      id: "safety",
-      title: "🛡️ Safety — Absolute Priority",
-      text: `
-        <p>
-          Check both images for prohibited or unsafe visual content.
-        </p>
-
-        <div class="choice-grid">
-          <button class="choice" data-value="neither">
-            <strong>Neither</strong>
-            <small>Both images are safe.</small>
-          </button>
-
-          <button class="choice" data-value="a">
-            <strong>Image A</strong>
-            <small>Image A has a safety issue.</small>
-          </button>
-
-          <button class="choice" data-value="b">
-            <strong>Image B</strong>
-            <small>Image B has a safety issue.</small>
-          </button>
-
-          <button class="choice" data-value="both">
-            <strong>Both</strong>
-            <small>Both images have safety issues.</small>
-          </button>
-        </div>
-      `
-    },
-
-    {
-      id: "prompt",
-      title: "🎯 Prompt Relevance",
-      text: `
-        <p>
-          Evaluate the core idea of the prompt rather than simply counting
-          keywords or objects.
-        </p>
-
-        <div class="choice-grid">
-          <button class="choice" data-value="a">
-            <strong>Image A</strong>
-            <small>Better captures the main prompt idea.</small>
-          </button>
-
-          <button class="choice" data-value="b">
-            <strong>Image B</strong>
-            <small>Better captures the main prompt idea.</small>
-          </button>
-        </div>
-      `
-    },
-
-    {
-      id: "aesthetic",
-      title: "🎨 Aesthetic Value & Artistry",
-      text: `
-        <p>
-          Compare the overall visual beauty and artistic quality.
-        </p>
-
-        <div class="metric">
-          <span>Composition</span>
-          <span>Framing & visual balance</span>
-        </div>
-
-        <div class="metric">
-          <span>Color & Lighting</span>
-          <span>Harmony & expressive lighting</span>
-        </div>
-
-        <div class="metric">
-          <span>Creativity</span>
-          <span>Original artistic interpretation</span>
-        </div>
-
-        <div class="choice-grid" style="margin-top:15px">
-          <button class="choice" data-value="a">
-            <strong>Image A</strong>
-            <small>Stronger aesthetic quality.</small>
-          </button>
-
-          <button class="choice" data-value="b">
-            <strong>Image B</strong>
-            <small>Stronger aesthetic quality.</small>
-          </button>
-        </div>
-      `
-    },
-
-    {
-      id: "technical",
-      title: "🔧 Technical & Structural Integrity",
-      text: `
-        <p>Inspect carefully for:</p>
-
-        <div class="metric">
-          <span>Anatomy</span>
-          <span>Hands, fingers, eyes, limbs and joints</span>
-        </div>
-
-        <div class="metric">
-          <span>Physical Logic</span>
-          <span>Perspective, surfaces and object interaction</span>
-        </div>
-
-        <div class="metric">
-          <span>Image Clarity</span>
-          <span>Sharpness, detail, noise and blur</span>
-        </div>
-
-        <div class="metric">
-          <span>Text</span>
-          <span>Readable and correctly formed</span>
-        </div>
-
-        <div class="choice-grid" style="margin-top:15px">
-          <button class="choice" data-value="a">
-            <strong>Image A</strong>
-            <small>Stronger technical integrity.</small>
-          </button>
-
-          <button class="choice" data-value="b">
-            <strong>Image B</strong>
-            <small>Stronger technical integrity.</small>
-          </button>
-        </div>
-      `
-    },
-
-    {
-      id: "artifacts",
-      title: "🚫 Absence of Visual Artifacts",
-      text: `
-        <p>
-          Look for unwanted visual defects.
-        </p>
-
-        <div class="metric">
-          <span>Technical Noise</span>
-          <span>Compression, oversharpening, pixel soup</span>
-        </div>
-
-        <div class="metric">
-          <span>AI Hallucinations</span>
-          <span>Random blobs, floating parts, merging objects</span>
-        </div>
-
-        <div class="metric">
-          <span>Frames / Watermarks</span>
-          <span>Unless explicitly requested</span>
-        </div>
-
-        <div class="choice-grid" style="margin-top:15px">
-          <button class="choice" data-value="a">
-            <strong>Image A</strong>
-            <small>Cleaner image with fewer artifacts.</small>
-          </button>
-
-          <button class="choice" data-value="b">
-            <strong>Image B</strong>
-            <small>Cleaner image with fewer artifacts.</small>
-          </button>
-        </div>
-      `
-    },
-
-    {
-      id: "artistic",
-      title: "✨ Artistic Excellence",
-      text: `
-        <p>
-          When both images are acceptable, consider which feels more
-          polished, intentional and professionally produced.
-        </p>
-
-        <div class="metric">
-          <span>Pose & Expression</span>
-          <span>Natural and believable</span>
-        </div>
-
-        <div class="metric">
-          <span>Material Quality</span>
-          <span>Convincing skin, metal, fabric, etc.</span>
-        </div>
-
-        <div class="metric">
-          <span>Emotional Impact</span>
-          <span>Visual "wow" factor</span>
-        </div>
-
-        <div class="metric">
-          <span>Lighting</span>
-          <span>Professional shadows and illumination</span>
-        </div>
-
-        <div class="choice-grid" style="margin-top:15px">
-          <button class="choice" data-value="a">
-            <strong>Image A</strong>
-            <small>Stronger artistic excellence.</small>
-          </button>
-
-          <button class="choice" data-value="b">
-            <strong>Image B</strong>
-            <small>Stronger artistic excellence.</small>
-          </button>
-        </div>
-      `
-    },
-
-    {
-      id: "final",
-      title: "🏁 Final Decision",
-      text: `
-        <p>
-          Think like the client who will actually use this image.
-          Which image is the more complete and professional work?
-        </p>
-
-        <div class="choice-grid">
-          <button class="choice" data-value="a">
-            <strong>IMAGE A</strong>
-            <small>Choose Image A.</small>
-          </button>
-
-          <button class="choice" data-value="b">
-            <strong>IMAGE B</strong>
-            <small>Choose Image B.</small>
-          </button>
-        </div>
-
-        <textarea
-          id="notes"
-          class="notes"
-          placeholder="Optional: explain the main reason for your final decision..."
-        ></textarea>
-      `
-    }
-
-  ];
-
-
-  const fileA = document.getElementById("fileA");
-  const fileB = document.getElementById("fileB");
-
-  const previewA = document.getElementById("previewA");
-  const previewB = document.getElementById("previewB");
-
-  const uploadTextA = document.getElementById("uploadTextA");
-  const uploadTextB = document.getElementById("uploadTextB");
-
-  const startBtn = document.getElementById("startBtn");
-
-
-  function loadImage(file, preview, text, key) {
+    const file = event.target.files[0];
 
     if (!file) return;
 
@@ -716,146 +374,59 @@
 
     reader.onload = function(e) {
 
-      state[key] = e.target.result;
+        const box = document.getElementById(boxId);
 
-      preview.src = e.target.result;
-      preview.style.display = "block";
-      text.style.display = "none";
+        box.innerHTML =
+        '<img src="' + e.target.result + '" alt="Uploaded image">';
 
-      checkReady();
     };
 
     reader.readAsDataURL(file);
-  }
+}
 
 
-  fileA.addEventListener("change", () => {
-    loadImage(fileA.files[0], previewA, uploadTextA, "imageA");
-  });
+function choose(choice, button) {
 
-  fileB.addEventListener("change", () => {
-    loadImage(fileB.files[0], previewB, uploadTextB, "imageB");
-  });
+    selectedChoice = choice;
 
+    document.querySelectorAll(".choice button")
+    .forEach(btn => btn.classList.remove("selected"));
 
-  document.getElementById("prompt").addEventListener("input", e => {
-    state.prompt = e.target.value;
-    checkReady();
-  });
+    button.classList.add("selected");
+}
 
 
-  function checkReady() {
+function submitEvaluation() {
 
-    startBtn.disabled =
-      !state.prompt.trim() ||
-      !state.imageA ||
-      !state.imageB;
+    const prompt = document.getElementById("prompt").value.trim();
 
-  }
+    const reason = document.getElementById("reason").value.trim();
 
+    const result = document.getElementById("result");
 
-  startBtn.addEventListener("click", () => {
-
-    document.getElementById("startScreen").classList.add("hidden");
-    document.getElementById("evaluationScreen").classList.remove("hidden");
-
-    renderStep();
-
-  });
-
-
-  function renderStep() {
-
-    const step = steps[state.step];
-
-    const progress = document.getElementById("progress");
-
-    progress.innerHTML = steps.map((_, i) =>
-      `<span class="${i <= state.step ? "active" : ""}"></span>`
-    ).join("");
-
-    document.getElementById("stepContent").innerHTML =
-      `<div class="section-title">${step.title}</div>${step.text}`;
-
-    document.querySelectorAll(".choice").forEach(button => {
-
-      button.addEventListener("click", () => {
-
-        document.querySelectorAll(".choice").forEach(b =>
-          b.classList.remove("selected")
-        );
-
-        button.classList.add("selected");
-
-        state.answers[step.id] = button.dataset.value;
-
-        if (step.id === "final") {
-          state.finalChoice = button.dataset.value;
-        }
-
-      });
-
-    });
-
-  }
-
-
-  document.getElementById("nextBtn").addEventListener("click", () => {
-
-    const step = steps[state.step];
-
-    if (!state.answers[step.id]) {
-
-      alert("Please select an option before continuing.");
-
-      return;
-
+    if (!prompt) {
+        alert("Please enter the evaluation prompt.");
+        return;
     }
 
-    if (step.id === "final") {
-
-      showResult();
-
-      return;
-
+    if (!selectedChoice) {
+        alert("Please select Image A, Image B, or Tie.");
+        return;
     }
 
-    state.step++;
+    if (!reason) {
+        alert("Please provide a reason for your decision.");
+        return;
+    }
 
-    renderStep();
+    result.style.display = "block";
 
-  });
+    result.innerHTML =
+    "<strong>Evaluation submitted ✓</strong><br><br>" +
+    "Selected: <strong>" + selectedChoice + "</strong><br>" +
+    "Your evaluation has been recorded locally for this prototype.";
 
-
-  function showResult() {
-
-    document.getElementById("evaluationScreen").classList.add("hidden");
-
-    document.getElementById("resultScreen").classList.remove("hidden");
-
-    const choice = state.finalChoice;
-
-    document.getElementById("resultTitle").textContent =
-      choice === "a"
-        ? "Image A Selected"
-        : "Image B Selected";
-
-    document.getElementById("resultText").textContent =
-      "Evaluation completed. Your final decision has been recorded locally.";
-
-    // Prepare data for Telegram.
-    const result = {
-      prompt: state.prompt,
-      finalChoice: choice,
-      answers: state.answers,
-      notes: document.getElementById("notes")?.value || "",
-      timestamp: new Date().toISOString()
-    };
-
-    console.log("ANNOTATION RESULT:", result);
-
-    // Later we will send this securely to our backend.
-  }
+}
 
 </script>
 
