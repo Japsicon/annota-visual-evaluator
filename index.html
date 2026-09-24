@@ -694,21 +694,22 @@ function generateResult() {
 
   let comparison = "";
 
-  if (aTotal > bTotal) {
+if (aTotal > bTotal) {
 
     comparison =
-      "Image A has the higher combined evaluation score.";
+        "Image A has the higher combined evaluation score.";
 
-  } else if (bTotal > aTotal) {
-
-    comparison =
-      "Image B has the higher combined evaluation score.";
-
-  } else {
+} else if (bTotal > aTotal) {
 
     comparison =
-      "Both images have the same combined evaluation score.";
+        "Image B has the higher combined evaluation score.";
 
+} else {
+
+    comparison =
+        "Both images have the same combined evaluation score. The final selection is based on the evaluator's professional judgment.";
+
+  }
   }
 
 
