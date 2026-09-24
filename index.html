@@ -8,187 +8,261 @@
 
 <style>
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0b0d12;
-    color: #f5f7fa;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #080a0f;
+  color: #f5f7fb;
 }
 
 .container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 20px;
+  width: min(1100px, 94%);
+  margin: auto;
+  padding: 25px 0 60px;
 }
 
 .header {
-    padding: 25px 0;
+  padding: 25px 0;
 }
 
 .logo {
-    font-size: 25px;
-    font-weight: 800;
+  font-size: 30px;
+  font-weight: 800;
 }
 
 .subtitle {
-    color: #9ca3af;
-    margin-top: 6px;
+  margin-top: 8px;
+  color: #9ca3af;
+  font-size: 16px;
 }
 
 .card {
-    background: #141821;
-    border: 1px solid #272d3a;
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 18px;
-}
-
-label {
-    display: block;
-    font-weight: 700;
-    margin-bottom: 8px;
-}
-
-textarea {
-    width: 100%;
-    min-height: 110px;
-    background: #0d1118;
-    border: 1px solid #303746;
-    border-radius: 12px;
-    color: white;
-    padding: 14px;
-    font-size: 15px;
-    resize: vertical;
-}
-
-.upload-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-}
-
-.image-box {
-    background: #0d1118;
-    border: 1px dashed #465064;
-    border-radius: 15px;
-    min-height: 280px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-}
-
-.image-box img {
-    width: 100%;
-    height: 280px;
-    object-fit: contain;
-}
-
-.placeholder {
-    text-align: center;
-    color: #7d8798;
-    padding: 20px;
-}
-
-input[type="file"] {
-    width: 100%;
-    margin-top: 12px;
+  background: #11151d;
+  border: 1px solid #252b36;
+  border-radius: 22px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.22);
 }
 
 .section-title {
-    font-size: 20px;
-    font-weight: 800;
-    margin-bottom: 15px;
+  font-size: 25px;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
+
+label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #303744;
+  background: #0b0e13;
+  color: white;
+  font-size: 16px;
+  resize: vertical;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: #7c3aed;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.image-box {
+  position: relative;
+  min-height: 330px;
+  border: 2px dashed #3a4250;
+  border-radius: 18px;
+  background: #0b0e13;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.image-box:hover {
+  border-color: #8b5cf6;
+}
+
+.image-box input {
+  display: none;
+}
+
+.upload-content {
+  text-align: center;
+  color: #9ca3af;
+  padding: 20px;
+}
+
+.upload-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.upload-title {
+  font-size: 18px;
+  color: white;
+  font-weight: 700;
+}
+
+.preview {
+  width: 100%;
+  height: 100%;
+  max-height: 430px;
+  object-fit: contain;
+  display: none;
 }
 
 .criteria {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
 
 .criterion {
-    background: #0d1118;
-    border: 1px solid #2b3240;
-    padding: 15px;
-    border-radius: 13px;
+  background: #0c1016;
+  border: 1px solid #272e39;
+  border-radius: 16px;
+  padding: 18px;
 }
 
-.criterion strong {
-    display: block;
-    margin-bottom: 5px;
+.criterion h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
 }
 
-.criterion span {
-    color: #9ca3af;
-    font-size: 13px;
+.criterion p {
+  margin: 0;
+  color: #9ca3af;
+  line-height: 1.5;
+  font-size: 14px;
 }
 
-.choice {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+.rating-row {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.choice button {
-    border: 1px solid #343c4c;
-    background: #171d28;
-    color: white;
-    padding: 15px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
+.rating-row input {
+  width: 100%;
 }
 
-.choice button.selected {
-    background: #2563eb;
-    border-color: #3b82f6;
+.score {
+  background: #0b0e13;
+  border: 1px solid #303744;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
 }
 
-.reason {
-    margin-top: 15px;
+.winner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
 }
 
-.submit {
-    width: 100%;
-    border: none;
-    background: #2563eb;
-    color: white;
-    padding: 17px;
-    border-radius: 13px;
-    font-size: 17px;
-    font-weight: 800;
-    margin-top: 15px;
+.winner-btn {
+  border: 1px solid #343b48;
+  background: #0b0e13;
+  color: white;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.submit:active {
-    transform: scale(.99);
+.winner-btn:hover,
+.winner-btn.selected {
+  background: #6d28d9;
+  border-color: #8b5cf6;
+}
+
+.primary-btn {
+  width: 100%;
+  border: 0;
+  border-radius: 15px;
+  padding: 17px;
+  background: #7c3aed;
+  color: white;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.primary-btn:hover {
+  background: #6d28d9;
 }
 
 .result {
-    display: none;
-    background: #101827;
-    border: 1px solid #2563eb;
-    border-radius: 15px;
-    padding: 18px;
-    margin-top: 18px;
+  display: none;
+  border: 1px solid #3b2c68;
+  background: #151022;
 }
 
-@media(max-width:700px) {
-    .upload-grid,
-    .criteria,
-    .choice {
-        grid-template-columns: 1fr;
-    }
+.result-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
 
-    .image-box,
-    .image-box img {
-        height: 240px;
-    }
+.result-text {
+  color: #c7cad1;
+  line-height: 1.7;
+}
+
+.small {
+  color: #8f96a3;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+@media(max-width: 750px) {
+
+  .container {
+    width: 92%;
+  }
+
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .criteria {
+    grid-template-columns: 1fr;
+  }
+
+  .winner-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logo {
+    font-size: 26px;
+  }
+
+  .section-title {
+    font-size: 22px;
+  }
 }
 </style>
 </head>
@@ -197,234 +271,491 @@ input[type="file"] {
 
 <div class="container">
 
-    <div class="header">
-        <div class="logo">✦ Annota Visual Evaluator</div>
-        <div class="subtitle">
-            High-end AI image quality & aesthetic comparison
-        </div>
+  <header class="header">
+    <div class="logo">✦ Annota Visual Evaluator</div>
+    <div class="subtitle">
+      High-end AI image quality & aesthetic comparison workspace
+    </div>
+  </header>
+
+
+  <!-- PROMPT -->
+
+  <section class="card">
+
+    <div class="section-title">
+      01 — Prompt
     </div>
 
-    <div class="card">
+    <label for="prompt">
+      Evaluation Prompt
+    </label>
 
-        <div class="section-title">01 — Prompt</div>
+    <textarea
+      id="prompt"
+      placeholder="Enter the prompt used to generate the images..."
+    ></textarea>
 
-        <label>Evaluation Prompt</label>
+  </section>
 
-        <textarea id="prompt"
-        placeholder="Enter the prompt used to generate the images..."></textarea>
 
+  <!-- IMAGE UPLOAD -->
+
+  <section class="card">
+
+    <div class="section-title">
+      02 — Compare Images
     </div>
 
-    <div class="card">
+    <div class="image-grid">
 
-        <div class="section-title">02 — Compare Images</div>
+      <!-- IMAGE A -->
 
-        <div class="upload-grid">
+      <label class="image-box">
 
-            <div>
-                <label>Image A</label>
+        <input
+          type="file"
+          id="imageA"
+          accept="image/*"
+          onchange="previewImage('imageA','previewA','uploadA')"
+        >
 
-                <div class="image-box" id="boxA">
-                    <div class="placeholder">
-                        🖼️<br><br>
-                        Upload Image A
-                    </div>
-                </div>
-
-                <input type="file"
-                accept="image/*"
-                onchange="previewImage(event, 'boxA')">
-            </div>
-
-
-            <div>
-                <label>Image B</label>
-
-                <div class="image-box" id="boxB">
-                    <div class="placeholder">
-                        🖼️<br><br>
-                        Upload Image B
-                    </div>
-                </div>
-
-                <input type="file"
-                accept="image/*"
-                onchange="previewImage(event, 'boxB')">
-            </div>
-
+        <div class="upload-content" id="uploadA">
+          <div class="upload-icon">🖼️</div>
+          <div class="upload-title">
+            Upload Image A
+          </div>
+          <div class="small">
+            Tap to select an image
+          </div>
         </div>
 
-    </div>
+        <img id="previewA" class="preview">
+
+      </label>
 
 
-    <div class="card">
+      <!-- IMAGE B -->
 
-        <div class="section-title">
-            03 — Evaluation Criteria
+      <label class="image-box">
+
+        <input
+          type="file"
+          id="imageB"
+          accept="image/*"
+          onchange="previewImage('imageB','previewB','uploadB')"
+        >
+
+        <div class="upload-content" id="uploadB">
+          <div class="upload-icon">🖼️</div>
+          <div class="upload-title">
+            Upload Image B
+          </div>
+          <div class="small">
+            Tap to select an image
+          </div>
         </div>
 
-        <div class="criteria">
+        <img id="previewB" class="preview">
 
-            <div class="criterion">
-                <strong>🎨 Aesthetic Value</strong>
-                <span>
-                    Composition, color, lighting and artistic quality.
-                </span>
-            </div>
-
-            <div class="criterion">
-                <strong>⚙️ Technical Quality</strong>
-                <span>
-                    Sharpness, detail, noise, compression and clarity.
-                </span>
-            </div>
-
-            <div class="criterion">
-                <strong>🧍 Anatomy & Structure</strong>
-                <span>
-                    Check faces, fingers, limbs, objects and physical logic.
-                </span>
-            </div>
-
-            <div class="criterion">
-                <strong>🎯 Prompt Relevance</strong>
-                <span>
-                    Does the image capture the main subject and intent?
-                </span>
-            </div>
-
-            <div class="criterion">
-                <strong>✨ Creativity</strong>
-                <span>
-                    Originality, composition and creative interpretation.
-                </span>
-            </div>
-
-            <div class="criterion">
-                <strong>🚫 Visual Artifacts</strong>
-                <span>
-                    Look for glitches, unwanted objects, distortion and noise.
-                </span>
-            </div>
-
-        </div>
+      </label>
 
     </div>
 
+  </section>
 
-    <div class="card">
 
-        <div class="section-title">
-            04 — Final Comparison
-        </div>
+  <!-- EVALUATION FRAMEWORK -->
 
-        <p style="color:#9ca3af;">
-            Think like a professional editor choosing the image
-            that would actually be used.
+  <section class="card">
+
+    <div class="section-title">
+      03 — Evaluation Framework
+    </div>
+
+    <div class="criteria">
+
+      <div class="criterion">
+        <h3>🎨 Aesthetic Value & Artistry</h3>
+        <p>
+          Composition, color, lighting, creativity,
+          visual appeal and overall artistic quality.
         </p>
+      </div>
 
-        <div class="choice">
+      <div class="criterion">
+        <h3>⚙️ Technical & Structural Integrity</h3>
+        <p>
+          Anatomy, physical logic, image clarity,
+          detail and absence of AI glitches.
+        </p>
+      </div>
 
-            <button onclick="choose('A', this)">
-                Image A
-            </button>
+      <div class="criterion">
+        <h3>🎯 Intent & Prompt Relevance</h3>
+        <p>
+          Does the image capture the main subject,
+          idea and mood requested by the prompt?
+        </p>
+      </div>
 
-            <button onclick="choose('B', this)">
-                Image B
-            </button>
+      <div class="criterion">
+        <h3>🚫 Visual Artifacts</h3>
+        <p>
+          Check for unwanted blur, noise, compression,
+          random objects, distorted details and artifacts.
+        </p>
+      </div>
 
-            <button onclick="choose('Tie', this)">
-                Tie
-            </button>
+      <div class="criterion">
+        <h3>✨ Artistic Excellence</h3>
+        <p>
+          Consider beauty, expression, material quality,
+          lighting and emotional impact.
+        </p>
+      </div>
 
-        </div>
-
-        <div class="reason">
-
-            <label>Reason for your decision</label>
-
-            <textarea
-            id="reason"
-            placeholder="Briefly explain why you selected this result..."></textarea>
-
-        </div>
-
-        <button class="submit" onclick="submitEvaluation()">
-            Submit Evaluation
-        </button>
-
-        <div class="result" id="result"></div>
+      <div class="criterion">
+        <h3>🛡️ Safety</h3>
+        <p>
+          Unsafe or prohibited visual content should
+          be treated as an absolute priority.
+        </p>
+      </div>
 
     </div>
+
+  </section>
+
+
+  <!-- MANUAL SCORING -->
+
+  <section class="card">
+
+    <div class="section-title">
+      04 — Evaluation Scores
+    </div>
+
+    <p class="small">
+      Rate each image from 1–10 based on the evaluation rules.
+    </p>
+
+    <h3>Image A</h3>
+
+    <div class="rating-row">
+      <span>Prompt Relevance</span>
+      <input
+        type="range"
+        min="1"
+        max="10"
+        value="5"
+        oninput="updateScore(this,'aPrompt')"
+      >
+      <div class="score" id="aPrompt">5</div>
+    </div>
+
+    <div class="rating-row">
+      <span>Aesthetic Value</span>
+      <input
+        type="range"
+        min="1"
+        max="10"
+        value="5"
+        oninput="updateScore(this,'aBeauty')"
+      >
+      <div class="score" id="aBeauty">5</div>
+    </div>
+
+    <div class="rating-row">
+      <span>Technical Quality</span>
+      <input
+        type="range"
+        min="1"
+        max="10"
+        value="5"
+        oninput="updateScore(this,'aTechnical')"
+      >
+      <div class="score" id="aTechnical">5</div>
+    </div>
+
+
+    <h3>Image B</h3>
+
+    <div class="rating-row">
+      <span>Prompt Relevance</span>
+      <input
+        type="range"
+        min="1"
+        max="10"
+        value="5"
+        oninput="updateScore(this,'bPrompt')"
+      >
+      <div class="score" id="bPrompt">5</div>
+    </div>
+
+    <div class="rating-row">
+      <span>Aesthetic Value</span>
+      <input
+        type="range"
+        min="1"
+        max="10"
+        value="5"
+        oninput="updateScore(this,'bBeauty')"
+      >
+      <div class="score" id="bBeauty">5</div>
+    </div>
+
+    <div class="rating-row">
+      <span>Technical Quality</span>
+      <input
+        type="range"
+        min="1"
+        max="10"
+        value="5"
+        oninput="updateScore(this,'bTechnical')"
+      >
+      <div class="score" id="bTechnical">5</div>
+    </div>
+
+  </section>
+
+
+  <!-- WINNER -->
+
+  <section class="card">
+
+    <div class="section-title">
+      05 — Final Decision
+    </div>
+
+    <p>
+      Which image would you select as the professional
+      final result?
+    </p>
+
+    <div class="winner-grid">
+
+      <button
+        class="winner-btn"
+        onclick="chooseWinner(this,'Image A')"
+      >
+        Image A
+      </button>
+
+      <button
+        class="winner-btn"
+        onclick="chooseWinner(this,'Image B')"
+      >
+        Image B
+      </button>
+
+      <button
+        class="winner-btn"
+        onclick="chooseWinner(this,'Tie')"
+      >
+        Tie
+      </button>
+
+    </div>
+
+    <button
+      class="primary-btn"
+      onclick="generateResult()"
+    >
+      ✦ Generate Evaluation Summary
+    </button>
+
+  </section>
+
+
+  <!-- RESULT -->
+
+  <section class="card result" id="result">
+
+    <div class="result-title">
+      Evaluation Summary
+    </div>
+
+    <div class="result-text" id="resultText"></div>
+
+  </section>
 
 </div>
 
 
 <script>
 
-let selectedChoice = "";
+let selectedWinner = "";
 
-function previewImage(event, boxId) {
 
-    const file = event.target.files[0];
+/* IMAGE PREVIEW */
 
-    if (!file) return;
+function previewImage(inputId, previewId, uploadId) {
 
-    const reader = new FileReader();
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  const upload = document.getElementById(uploadId);
 
-    reader.onload = function(e) {
+  if (!input.files || !input.files[0]) {
+    return;
+  }
 
-        const box = document.getElementById(boxId);
+  const file = input.files[0];
 
-        box.innerHTML =
-        '<img src="' + e.target.result + '" alt="Uploaded image">';
+  const reader = new FileReader();
 
-    };
+  reader.onload = function(event) {
 
-    reader.readAsDataURL(file);
+    preview.src = event.target.result;
+
+    preview.style.display = "block";
+
+    upload.style.display = "none";
+
+  };
+
+  reader.readAsDataURL(file);
 }
 
 
-function choose(choice, button) {
+/* SCORE DISPLAY */
 
-    selectedChoice = choice;
+function updateScore(slider, targetId) {
 
-    document.querySelectorAll(".choice button")
-    .forEach(btn => btn.classList.remove("selected"));
+  document.getElementById(targetId).textContent =
+    slider.value;
 
-    button.classList.add("selected");
 }
 
 
-function submitEvaluation() {
+/* WINNER */
 
-    const prompt = document.getElementById("prompt").value.trim();
+function chooseWinner(button, winner) {
 
-    const reason = document.getElementById("reason").value.trim();
+  selectedWinner = winner;
 
-    const result = document.getElementById("result");
+  const buttons =
+    document.querySelectorAll(".winner-btn");
 
-    if (!prompt) {
-        alert("Please enter the evaluation prompt.");
-        return;
-    }
+  buttons.forEach(function(btn) {
+    btn.classList.remove("selected");
+  });
 
-    if (!selectedChoice) {
-        alert("Please select Image A, Image B, or Tie.");
-        return;
-    }
+  button.classList.add("selected");
+}
 
-    if (!reason) {
-        alert("Please provide a reason for your decision.");
-        return;
-    }
 
-    result.style.display = "block";
+/* RESULT */
 
-    result.innerHTML =
-    "<strong>Evaluation submitted ✓</strong><br><br>" +
-    "Selected: <strong>" + selectedChoice + "</strong><br>" +
-    "Your evaluation has been recorded locally for this prototype.";
+function generateResult() {
+
+  const prompt =
+    document.getElementById("prompt").value.trim();
+
+  if (!prompt) {
+
+    alert("Please enter the evaluation prompt first.");
+
+    return;
+  }
+
+  if (!selectedWinner) {
+
+    alert("Please select Image A, Image B, or Tie.");
+
+    return;
+  }
+
+  const aPrompt =
+    Number(document.getElementById("aPrompt").textContent);
+
+  const aBeauty =
+    Number(document.getElementById("aBeauty").textContent);
+
+  const aTechnical =
+    Number(document.getElementById("aTechnical").textContent);
+
+  const bPrompt =
+    Number(document.getElementById("bPrompt").textContent);
+
+  const bBeauty =
+    Number(document.getElementById("bBeauty").textContent);
+
+  const bTechnical =
+    Number(document.getElementById("bTechnical").textContent);
+
+
+  const aTotal =
+    aPrompt + aBeauty + aTechnical;
+
+  const bTotal =
+    bPrompt + bBeauty + bTechnical;
+
+
+  let comparison = "";
+
+  if (aTotal > bTotal) {
+
+    comparison =
+      "Image A has the higher combined evaluation score.";
+
+  } else if (bTotal > aTotal) {
+
+    comparison =
+      "Image B has the higher combined evaluation score.";
+
+  } else {
+
+    comparison =
+      "Both images have the same combined evaluation score.";
+
+  }
+
+
+  const result =
+    document.getElementById("result");
+
+  const resultText =
+    document.getElementById("resultText");
+
+
+  resultText.innerHTML =
+
+    "<strong>Selected:</strong> " +
+    selectedWinner +
+
+    "<br><br>" +
+
+    "<strong>Image A:</strong> " +
+    aTotal + "/30" +
+
+    "<br>" +
+
+    "<strong>Image B:</strong> " +
+    bTotal + "/30" +
+
+    "<br><br>" +
+
+    comparison +
+
+    "<br><br>" +
+
+    "<strong>Evaluation principle:</strong> " +
+
+    "The final choice should consider prompt intent, " +
+    "aesthetic quality, technical integrity, anatomy, " +
+    "visual artifacts and overall professional readiness. " +
+    "A minor prompt deviation may be acceptable when " +
+    "the resulting image is substantially more polished, " +
+    "while a serious failure of the main subject should " +
+    "not be ignored.";
+
+
+  result.style.display = "block";
+
+  result.scrollIntoView({
+    behavior: "smooth"
+  });
 
 }
 
