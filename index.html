@@ -699,13 +699,24 @@ if (aTotal > bTotal) {
     comparison =
         "Image A has the higher combined evaluation score.";
 
-} else if (bTotal > aTotal) {
+} else {
+
+    comparison =
+        "Both images have the same combined evaluation score. The final selection is based on professional judgment.";
+
+}
 
     comparison =
         "Image B has the higher combined evaluation score.";
 
 } else {
 
+    selectedWinner = "Tie";
+
+    comparison =
+        "Both images have the same combined evaluation score. Neither image has a scoring advantage.";
+
+}
     comparison =
         "Both images have the same combined evaluation score. The final selection is based on the evaluator's professional judgment.";
 
